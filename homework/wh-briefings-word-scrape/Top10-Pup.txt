@@ -1,0 +1,23 @@
+Top 10 via pup:
+  82898 President
+  13678 because
+  11797 question
+  11643 American
+  11068 Congress
+  10488 important
+   9768 government
+   9526 Secretary
+   9374 administration
+   9247 something
+Top 10 via ordinary grep
+  94422 President
+  45630 container
+  43630 content
+  35486 whitehouse
+  28185 siblings
+  28182 menuparent
+  26111 administration
+  25091 briefing
+  23469 section
+  22792 default
+Hey Dan - Here's a comparison for the top 10, 7-letter+ words from the WH briefings. (I've added the counts from my original grep method, just for comparison.) Is this what you were thinking? Thought I'd check before pushing to github. - Ben
