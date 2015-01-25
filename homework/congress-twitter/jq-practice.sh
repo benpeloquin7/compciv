@@ -3,6 +3,7 @@
 #Save file paths into vars
 pathCurr="data-hold/legislators-current"
 pathSoc="data-hold/legislators-social-media"
+pathTwitt="data-hold/congress-twitter-profiles"
 
 #Question 1: Print last name of first congressmember
 echo "1: "
@@ -53,3 +54,25 @@ cat $pathCurr.json | jq --raw-output '.[].terms[-1:][0].party' | grep -cE '\b[^R
 echo "11: "
 cat $pathCurr.json | jq --raw-output '.[].terms[].rss_url' | grep -vi 'Null' | 
 sort | uniq | head -n 10
+
+#Question 12: print the number of Twitter accounts
+echo "12: "
+cat $pathSoc.json | jq '.[].social.twitter' | grep -ivc 'null'
+
+#Question 13: print the number of Facebook accounts
+echo "13: "
+cat $pathSoc.json | jq '.[].social.facebook' | grep -ivc 'null'
+
+#Question 14: print the first 10 lines of a comma-separated list of 
+#all bioguideIDs, along with Twitter screen names (if they have one),
+#in alphabetical order of Twitter screen names
+echo "14: "
+cat $pathSoc.json | jq --raw-output '.[] | [.id.bioguide, .social.twitter] | @csv'
+ | head -n 10
+
+#Question 15: repeat Step 14, but filter it to print only the lines that
+#do not have a Twitter account listed
+echo "15: "
+cat $pathSoc.json | jq --raw-output '.[] | [.id.bioguide, .social.twitter] | @csv' | 
+grep -E '\,$' | head -n 16
+
