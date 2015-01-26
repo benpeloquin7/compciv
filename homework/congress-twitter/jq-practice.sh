@@ -67,8 +67,8 @@ cat $pathSoc.json | jq '.[].social.facebook' | grep -ivc 'null'
 #all bioguideIDs, along with Twitter screen names (if they have one),
 #in alphabetical order of Twitter screen names
 echo "14: "
-cat $pathSoc.json | jq --raw-output '.[] | [.id.bioguide, .social.twitter] | @csv'
- | head -n 10
+cat $pathSoc.json | jq --raw-output '.[] | [.id.bioguide, .social.twitter] |
+ @csv' | head -n 10
 
 #Question 15: repeat Step 14, but filter it to print only the lines that
 #do not have a Twitter account listed
@@ -76,3 +76,22 @@ echo "15: "
 cat $pathSoc.json | jq --raw-output '.[] | [.id.bioguide, .social.twitter] | @csv' | 
 grep -E '\,$' | head -n 16
 
+#Question 16: print the number of verified Twitter accounts.
+echo "16: "
+cat $pathTwitt.json | jq '.[].verified' | grep -c 'true'
+
+#Question 18: print the first 10 lines of: CSV of name,
+#screen_name, followers_count, verified,and created_at
+#(when the account was created):
+echo "18: "
+cat $pathTwitt.json | jq --raw-output '.[] |
+ [.name, .screen_name, .followers_count, 
+  .verified, .created_at] | @csv' | head -n 10
+
+#Question 19: print the first 10 lines of: a CSV of screen_name,
+#statuses_count, followers_count, and the created_at of their
+#most recent tweet
+echo "19: "
+cat $pathTwitt.json | jq --raw-output '.[] |                               
+ [.screen_name, .statuses_count, .followers_count,
+ .status.created_at] | @csv' | head -n 10
