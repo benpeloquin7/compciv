@@ -20,6 +20,8 @@ curl -s http://www.dc.state.fl.us/oth/deathrow/execlist2.html\
 #CA -->
 curl -s http://www.cdcr.ca.gov/capital_punishment/docs/condemnedinmatelistsecure.pdf\
 > ca.pdf
+pdftotext ca.pdf ca.txt
+rm ca.pdf
 
 #Return to parent
 cd ..
