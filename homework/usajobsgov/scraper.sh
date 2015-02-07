@@ -20,9 +20,9 @@ currTime=$(bash ../../time.sh)
 mkdir $currTime
 cd $currTime
 
-#Save a file with all job families
+#Save a file with all uniq job families
 all_Job_Families=$(cat ../../OccupationalSeries.xml |\
-hxselect -c 'JobFamily' -s ',' | sed s/,/\\n/g)
+hxselect -c 'JobFamily' -s ',' | sed s/,/\\n/g | uniq)
 
 #Curl down all pages
 path=https://data.usajobs.gov/api/jobs?
@@ -30,11 +30,11 @@ path=https://data.usajobs.gov/api/jobs?
 #Outer loop through all job families
 for jobfam in $all_Job_Families; do
 #curl page number
-pages=$(curl $path"series="$jobfam | jq '. | .Pages')
+pages=$(curl -s $path"series="$jobfam | jq '. | .Pages')
 #remove whatever non-int char exists there
 pages=$(echo $pages | sed 's/[^0-9]*//g')
 #inner loop through pages
 for nPage in $(seq 1 $pages); do
-curl -o $jobfam"-"$nPage".json" $path"series="$jobfam"&Page="$nPage
+curl -s -o $jobfam"-"$nPage".json" $path"series="$jobfam"&Page="$nPage
 done
 done
