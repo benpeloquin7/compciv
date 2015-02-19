@@ -23,9 +23,23 @@ grep -vE '[0-9]{3,4}')"
 #echo $(date -ud "$d_start $num days" +%Y-%m-%d)
 done
 
+file_name=$(date -d "$d_start $num days" +%Y)
+
+if [ -e "$filename.csv" ]
+then
+rm $filename.csv
+else
 echo $nums | tr " " "\n" | sort | uniq -c | sort -r |\
 sed -e 's/^[ \t]*//' | sed 's/ \([0-9]\)/,\1/g' >\
-$(date -d "$d_start $num days" +%Y).csv
+$file_name.csv
+fi
 
-cat $(date -d "$d_start $num days" +%Y).csv
+#Display file contents in terminal
+cat $file_name.csv
 
+#Run rscript for plotting
+Rscript r_graph.r
+
+#For an example of this plot please visit
+#web.stanford.edu/~<stanford_user_name>/listicles_plot.jpeg
+mv listicles_plot.jpeg ~/WWW/listicles_plot.jpeg
