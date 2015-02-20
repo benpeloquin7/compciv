@@ -16,5 +16,5 @@ grep -E '[0-9]+' | grep -oE '_.+')
 #loop through url years curling html data
 for url in $urls; do 
 echo "Currently pulling data from $base_url$url"
-curl -s -o data-hold/$url $base_url\$url
+curl -s -o data-hold/$url $base_url$url
 done
