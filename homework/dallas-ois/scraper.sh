@@ -18,3 +18,23 @@ for url in $urls; do
 echo "Currently pulling data from $base_url$url"
 curl -s -o data-hold/$url $base_url$url
 done
+
+base_url="www.dallaspolice.net/ois/"
+
+echo "creating pdfs directory"
+mkdir -p pdfs
+
+#Loop through years .html
+echo "looping through data-hold..."
+for year in $(ls data-hold); do
+	#Loop through data tables
+	for narrative in $(cat data-hold/$year | pup 'a attr{href}' |\
+		grep -E "narrative" | grep -oE 'docs.+'); do
+		#Save file name to store pdf
+		file_name=$(echo "$narrative" | grep -oE '_.+')
+		#curl relevant file
+		echo "Pulling narrative from $file_name"
+		curl -s -o pdfs/$file_name $base_url$narrative
+	done
+done
+mv pdfs data-hold/pdfs
