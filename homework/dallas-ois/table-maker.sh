@@ -27,6 +27,9 @@ jq  --raw-output '.[] .children | [
 ] | @csv' >> incident1.csv
 done
 
+if [[ -e incident2.psv ]]; then
+rm incident2.psv
+fi
 csvfix echo -smq -osep '|' incident1.csv > incident2.psv
 
 ###incident2.psv###
@@ -37,11 +40,14 @@ touch incident3.psv
 
 cat incident2.psv | while read line; do
 	incident=$(echo $line | cut -d "|" -f 1)
-	pdf_file=$(ls data-hold/pdfs/* | grep -E "$incident")
-	pdftotext -layout "$pdf_file" "${pdf_file/%.pdf/.txt}"
-#	pdftotext "$pdf_file"
+	#special condition for 2014 because of (-)
+	if [[ $incident == *"2014"* ]]; then
+		incident=$(echo $incident | grep -oE "[0-9]{6}")
+	fi
+	pdf_file=$(ls data-hold/pdfs/* | grep "$incident")
+	pdftotext $pdf_file
 	txt_file=$(ls data-hold/pdfs/ | grep "$incident" | grep ".txt")
-	txt=$(cat $txt_file)
-	line="$line|$txt\n"
+	txt=$(cat data-hold/pdfs/$txt_file)
+	line="$line|$txt"
 	echo $line >> incident3.psv
 done
