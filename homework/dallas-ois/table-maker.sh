@@ -47,7 +47,14 @@ cat incident2.psv | while read line; do
 	pdf_file=$(ls data-hold/pdfs/* | grep "$incident")
 	pdftotext $pdf_file
 	txt_file=$(ls data-hold/pdfs/ | grep "$incident" | grep ".txt")
+	echo "test: $txt_file"
 	txt=$(cat data-hold/pdfs/$txt_file)
 	line="$line|$txt"
 	echo $line >> incident3.psv
 done
+
+cat incident3.psv | grep -v "|Date|Location|" > tables/incidents.psv
+
+#cleanup
+rm incident1.csv incident2.psv incident3.psv
+rm data-hold/pdfs/*.txt
