@@ -63,6 +63,9 @@ rm incident1.csv incident2.psv incident3.psv
 rm data-hold/pdfs/*.txt
 
 #call officers-maker to create officers.psv
-
 echo "Writing tables/officers.psv..."
 bash officers-maker.sh
+
+#call suspects-maker to create suspects.psv
+echo "Writing tables/suspects.psv"
+bash suspects-maker.sh
