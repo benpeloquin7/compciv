@@ -2,6 +2,9 @@
 
 
 ##########:::incidents.psv:::##########
+
+echo "Writing tables/incidents.psv..."
+
 if [[ -e incidents.csv ]]; then
 rm incident1.csv
 fi
@@ -58,3 +61,8 @@ cat incident3.psv | grep -v "|Date|Location|" > tables/incidents.psv
 #cleanup
 rm incident1.csv incident2.psv incident3.psv
 rm data-hold/pdfs/*.txt
+
+#call officers-maker to create officers.psv
+
+echo "Writing tables/officers.psv..."
+bash officers-maker.sh
