@@ -1,7 +1,15 @@
 ###:-----README.md------:###
-twitter profiles pulled from:
-http://twittercounter.com/pages/100
 
+
+tweet.as project:
+
+run tweet_as.sh script with a valid twitter @account name argument to generate
+tweets that sound as if they were produced by @account. n-gram model 
+implemented in n-gram.py script using 4-grams.
+
+
+Initial cache of twitter profiles pulled from:
+http://twittercounter.com/pages/100
 
 #Some code for tweet cleaning and word counting (obama example)
 csvfix order -f 4 @BarackObama.csv | grep -v 'RT' |\
