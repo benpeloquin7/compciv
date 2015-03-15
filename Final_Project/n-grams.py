@@ -2,11 +2,11 @@
 from random import randint
 from math import trunc
 
-nSize = 7
+nSize = 5
 
 #tokenized text
 tokens = []
-with open('cleantest.txt', 'r') as f:
+with open('current.txt', 'r') as f:
 	for line in f:
 		for word in line.split():
 			tokens.append(word)
@@ -39,7 +39,7 @@ sent = ""
 sent += "...%s " % start_key 
 
 #Generate n-gram tweet
-for i in range(0, trunc(140 / nSize)):
+for i in range(0, trunc(25 / nSize)):
 	#Randomly select a vector of words in map
 	random_value = randint(0, len(gram_map[current_key])) - 1
         next_tokens = gram_map[current_key][random_value]
